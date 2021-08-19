@@ -78,10 +78,21 @@ func getContactByID(c *gin.Context) {
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 }
 
+func printName(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, gin.H{
+		"name": "Oyewole Abayomi Samuel",
+		"role": "Software Engineer Manager",
+		"Phone Number": "07063317344",
+		"Location": "127.0.0.1",
+	})
+}
+
 
 func main(){
 	router := gin.Default()
 	router.Use(CORSMiddleware())
+	// this print a name
+	router.GET("/", printName)
 	router.GET("/contacts", getContacts)
 	router.GET("/contacts/:id", getContactByID)
 	router.POST("/contacts", postContacts)
