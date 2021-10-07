@@ -82,7 +82,8 @@ func printName(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{
 		"name": "Oyewole Abayomi Samuel",
 		"role": "Software Engineer Manager",
-		"Phone Number": "07063317344",
+		"Phone Number": "2347063317344",
+		"email": "oyewoleabayomi@gmail.com",
 		"Location": "127.0.0.1",
 	})
 }
