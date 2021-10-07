@@ -1,8 +1,9 @@
 package main
 
 import (
+	"crypto/rand"
 	"log"
-	"math/rand"
+	"math/big"
 	"net/http"
 	"os"
 	"time"
@@ -11,7 +12,7 @@ import (
 )
 
 const (
-	RandNum = 10
+	RandNum = 1000
 	AbortStatus = 204
 )
 
@@ -24,7 +25,6 @@ type contact struct {
 	Createddate		string		`json:"created_at"`
 }
 
-var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 var contacts = []contact {}
 
 // cor middleware.
@@ -44,14 +44,9 @@ func CORSMiddleware() gin.HandlerFunc {
     }
 }
 
-func generateRandID(n int) string {
-    b := make([]rune, n)
-    for i := range b {
-		
-        b[i] = letters[rand.Intn(len(letters))]
-    }
-
-    return string(b)	
+func generateRandID() string {
+	r, _ := rand.Int(rand.Reader, big.NewInt(RandNum))
+    return string(rune(r.Int64()))	
 }
 
 // getContacts responds with the list of all albums as JSON.
@@ -62,7 +57,7 @@ func getContacts(c *gin.Context) {
 // postContacts adds an album from JSON received in the request body.
 func postContacts(x *gin.Context) {
 	var newContact contact
-	newContact.ID = generateRandID(RandNum)
+	newContact.ID = generateRandID()
 	newContact.Createddate = time.Now().String()
 
 	if err := x.BindJSON(&newContact); err != nil {
