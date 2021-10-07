@@ -54,7 +54,7 @@ func getContacts(c *gin.Context) {
 // postContacts adds an album from JSON received in the request body
 func postContacts(x *gin.Context) {
 	var newContact contact
-	newContact.ID = generateRandId(10)
+	newContact.ID = generateRandID(10)
 	newContact.Createddate = time.Now().String()
 
 	if err := x.BindJSON(&newContact); err != nil {
